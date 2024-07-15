@@ -21,7 +21,7 @@ function Battle() {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get('http://127.0.0.1:8000/images/get_two_images');
+      const response = await axios.get('http://57.129.46.161:8000/images/get_two_images');
       setImages(response.data);
       setLoading(false);
     } catch (error) {
@@ -33,7 +33,7 @@ function Battle() {
 
   const handleBattle = async (winnerId, loserId) => {
     try {
-      const response = await axios.post('http://127.0.0.1:8000/images/battle/', null, {
+      const response = await axios.post('http://57.129.46.161:8000/images/battle/', null, {
         params: { winner_id: winnerId, loser_id: loserId },
       });
 
@@ -71,7 +71,7 @@ function Battle() {
       <div className="images">
         {images.map((image, index) => (
           <div key={image.id} className="image-container">
-            <img src={`http://127.0.0.1:8000${image.path}`} alt={`Image ${index + 1}`} />
+            <img src={`http://57.129.46.161:8000${image.path}`} alt={`Image ${index + 1}`} />
             <p>ELO Score: {image.score.toFixed(2)}</p> {/* Display ELO score */}
             <button onClick={() => handleBattle(image.id, images[1 - index].id)}>
               Vote for this image

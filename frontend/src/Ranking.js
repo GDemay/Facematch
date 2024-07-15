@@ -33,7 +33,7 @@ function Ranking() {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get('http://127.0.0.1:8000/images');
+      const response = await axios.get('http://57.129.46.161:8000/images');
       const sortedRankings = response.data.sort((a, b) => b.score - a.score);
       setRankings(sortedRankings);
       setLoading(false);
@@ -57,7 +57,7 @@ function Ranking() {
   const handleConfirm = async () => {
     if (selectedImage) {
       try {
-        await axios.delete(`http://127.0.0.1:8000/images/${selectedImage.id}`);
+        await axios.delete(`http://57.129.46.161:8000/images/${selectedImage.id}`);
         setRankings(rankings.filter(image => image.id !== selectedImage.id));
         setShowConfirm(false);
         setSelectedImage(null);
@@ -84,7 +84,7 @@ function Ranking() {
       <div className="ranking-list">
         {rankings.map((image, index) => (
           <div key={image.id} className="ranking-item" onClick={() => handleImageClick(image)}>
-            <img src={`http://127.0.0.1:8000${image.path}`} alt={`Image ${index + 1}`} />
+            <img src={`http://57.129.46.161:8000${image.path}`} alt={`Image ${index + 1}`} />
             <div className="ranking-info">
               <p>Rank: {index + 1}</p>
               <p>ELO Score: {image.score.toFixed(2)}</p>

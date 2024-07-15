@@ -26,7 +26,7 @@ function Upload() {
       setError(null);
       setSuccess(null);
 
-      const response = await axios.post('http://127.0.0.1:8000/images/', formData, {
+      const response = await axios.post('http://57.129.46.161:8000/images/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
