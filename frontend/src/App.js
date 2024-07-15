@@ -66,7 +66,7 @@ function Battle() {
 
   return (
     <div className="Battle">
-      <h1>Image Battle</h1>
+      <h1>FaceJerry</h1>
       <p>Which one is more attractive?</p>
       <div className="images">
         {images.map((image, index) => (
