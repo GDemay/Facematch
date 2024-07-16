@@ -38,6 +38,7 @@ def create_user_item(db: Session, item: schemas.ItemCreate, user_id: int):
     db.refresh(db_item)
     return db_item
 
+
 def create_image(db: Session, image: schemas.ImageCreate):
     db_image = models.Image(**image.dict())
     db.add(db_image)
@@ -51,6 +52,7 @@ def get_all_images(db: Session) -> List[schemas.Image]:
     images = db.query(models.Image).all()
     return images
 
+
 def get_two_images(db: Session) -> List[schemas.Image]:
     # Count the total number of images
     total_images = db.query(func.count(models.Image.id)).scalar()
@@ -60,19 +62,20 @@ def get_two_images(db: Session) -> List[schemas.Image]:
 
     # Fetch all image IDs
     image_ids = [image.id for image in db.query(models.Image.id).all()]
-    
+
     # Select two unique random IDs
     random_ids = random.sample(image_ids, 2)
-    
+
     # Fetch the images with the selected IDs
     random_images = db.query(models.Image).filter(models.Image.id.in_(random_ids)).all()
-    
+
     return random_images
+
 
 def delete_image(db: Session, image_id: int):
     # Fetch the image to ensure it exists
     db_image = db.query(models.Image).filter(models.Image.id == image_id).first()
-    
+
     if db_image is None:
         raise HTTPException(status_code=404, detail="Image not found")
 
@@ -87,29 +90,30 @@ def calculate_elo(winner_score, loser_score, k=16):
     # Calculate expected scores
     expected_winner = 1 / (1 + 10 ** ((loser_score - winner_score) / 400))
     expected_loser = 1 / (1 + 10 ** ((winner_score - loser_score) / 400))
-    
+
     # Update scores
     new_winner_score = winner_score + k * (1 - expected_winner)
     new_loser_score = loser_score + k * (0 - expected_loser)
-    
+
     return new_winner_score, new_loser_score
+
 
 def battle_images(db: Session, winner_id: int, loser_id: int) -> List[schemas.Image]:
     # Fetch the two images
     winner = db.query(models.Image).filter(models.Image.id == winner_id).first()
     loser = db.query(models.Image).filter(models.Image.id == loser_id).first()
-    
+
     if not winner or not loser:
         raise HTTPException(status_code=404, detail="One or both images not found")
-    
+
     # Calculate new ELO scores
     new_winner_score, new_loser_score = calculate_elo(winner.score, loser.score)
-    
+
     # Update the scores
     winner.score = new_winner_score
     loser.score = new_loser_score
-    
+
     # Commit the changes to the database
     db.commit()
-    
-    return[winner, loser]
+
+    return [winner, loser]

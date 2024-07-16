@@ -1,8 +1,8 @@
 from pydantic import BaseModel
 
+
 class ImageBase(BaseModel):
     pass
-    
 
 
 class ImageCreate(ImageBase):
@@ -16,8 +16,8 @@ class Image(ImageBase):
 
     class Config:
         orm_mode = True
-        
-        
+
+
 class ItemBase(BaseModel):
     title: str
     description: str | None = None

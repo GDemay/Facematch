@@ -24,9 +24,6 @@ COPY pyproject.toml poetry.lock* ./
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
-# Copy the rest of the application's code
-COPY . .
-
 # Create directory for uploaded images
 RUN mkdir -p /app/uploaded_images
 
