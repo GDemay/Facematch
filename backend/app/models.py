@@ -24,10 +24,11 @@ class Item(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     owner = relationship("User", back_populates="items")
-    
+
+
 class Image(Base):
     __tablename__ = "Image"
 
     id = Column(Integer, primary_key=True)
-    path = Column(String, nullable= False)
+    path = Column(String, nullable=False)
     score = Column(Float, default=1000, index=False)
